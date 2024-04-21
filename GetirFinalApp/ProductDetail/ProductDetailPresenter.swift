@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 protocol ProductDetailPresenterProtocol: AnyObject{
@@ -13,6 +14,7 @@ protocol ProductDetailPresenterProtocol: AnyObject{
     func addProductToCart()
     func increaseProductAmount()
     func decreaseProductAmount()
+    func setTitle() -> String
     func tappedShoppingCart()
 }
 
@@ -34,10 +36,15 @@ final class ProductDetailPresenter{
 }
 
 extension ProductDetailPresenter: ProductDetailPresenterProtocol{
+    func setTitle() -> String {
+        "Ürün Detayı"
+    }
+    
     func viewDidLoad() {
        // view.setProductDetail(product: product)
         view.setUpView()
         view.showProductDetail(product: product)
+        
     }
     
     func addProductToCart() {
@@ -55,4 +62,5 @@ extension ProductDetailPresenter: ProductDetailPresenterProtocol{
     func tappedShoppingCart() {
         router.navigateToShoppingCart()
     }
+    
 }

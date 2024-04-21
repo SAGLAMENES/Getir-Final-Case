@@ -95,7 +95,7 @@ extension ProductListView: ProductListViewProtocol {
     }
     
     func setUpNavigationBar() {
-        navigationItem.title = "Ürünler"
+        navigationItem.title = presenter.setTitle()
         let customView = UIView(frame: CGRect(x: 0, y: 0, width: 91, height: 34))
         
         let imageView = UIImageView(image: UIImage(named: "Icon")) // Set your image
@@ -138,7 +138,15 @@ extension ProductListView: ProductListViewProtocol {
 
 extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        presenter.didSelectProduct(at: indexPath.row)
+        switch sections[indexPath.section]{
+        case "vertical":
+            presenter.didSelectProduct(at: indexPath.row, at: "vertical")
+        case "horizontal":
+            presenter.didSelectProduct(at: indexPath.row, at: "horizontal")
+        default:
+            presenter.didSelectProduct(at: indexPath.row, at: "vertical")
+
+        }
     }
    
     func numberOfSections(in collectionView: UICollectionView) -> Int {

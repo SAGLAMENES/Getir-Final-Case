@@ -12,8 +12,9 @@ protocol ProductListPresenterProtocol: AnyObject {
     func numberOfItems(section: Int) -> Int?
     func didAddProduct(at index: Int) -> Product
     func product(_ index: Int) -> Product?
+    func setTitle() -> String
     func suggestedProduct(_ index: Int) -> Product?
-    func didSelectProduct(at index: Int)
+    func didSelectProduct(at index: Int, at section: String)
     func tappedShoppingCart()
    
 }
@@ -39,6 +40,10 @@ final class ProductListPresenter {
 }
 
 extension ProductListPresenter: ProductListPresenterProtocol{
+    func setTitle() -> String {
+        "Ürünler"
+    }
+    
    
     enum Section: Int {
         case vertical
@@ -69,8 +74,13 @@ extension ProductListPresenter: ProductListPresenterProtocol{
         return products[index]
     }
     
-    func didSelectProduct(at index: Int) {
-        router.navigateToProductDetail(product: products[index])
+    func didSelectProduct(at index: Int, at section: String) {
+        if section == "vertical" {
+            router.navigateToProductDetail(product: products[index])
+        }
+        else {
+            router.navigateToProductDetail(product: suggestedProducts[index])
+        }
     }
     func product(_ index: Int) -> Product? {
         products[ index]
