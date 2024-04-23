@@ -40,6 +40,7 @@ final class ProductDetailViewController: UIViewController {
         label.numberOfLines = 0
         label.textColor = .getirColor
         label.textAlignment = .center
+        
         return label
     }()
     let productDescriptionLabel: UILabel = {
@@ -50,6 +51,17 @@ final class ProductDetailViewController: UIViewController {
         label.textAlignment = .center
 
         return label
+    }()
+    
+    let addToCartButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = .getirColor
+        button.layer.cornerRadius = 10
+        button.setTitle("Sepete Ekle", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        
+        return button
     }()
     
     override func viewDidLoad() {
@@ -74,6 +86,7 @@ extension ProductDetailViewController: ProductDetailViewProtocol {
         view.addSubview(productNameLabel)
         view.addSubview(productPriceLabel)
         view.addSubview(productDescriptionLabel)
+        view.addSubview(addToCartButton)
         
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -92,11 +105,20 @@ extension ProductDetailViewController: ProductDetailViewProtocol {
             productDescriptionLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 3),
             productDescriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             productDescriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            
+            addToCartButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            addToCartButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            addToCartButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            addToCartButton.heightAnchor.constraint(equalToConstant: 50)
+            
         ])
+        
     }
+    
     @objc func closeViewController() {
        navigationController?.popViewController(animated: true)
     }
+    
     func showProductDetail(product: Product) {
         self.product = product
         productNameLabel.text = product.name

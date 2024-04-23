@@ -32,6 +32,7 @@
 		C5CE5A992BD51B7900C05E87 /* ShoppingCartListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5A952BD51B7900C05E87 /* ShoppingCartListRouter.swift */; };
 		C5CE5AA02BD52F0B00C05E87 /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5A9F2BD52F0A00C05E87 /* ButtonExtension.swift */; };
 		C5CE5AA22BD540F400C05E87 /* Basket Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5AA12BD540F400C05E87 /* Basket Manager.swift */; };
+		C5CE5AA52BD86A3100C05E87 /* ProductModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5AA32BD86A3100C05E87 /* ProductModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		C5CE5A952BD51B7900C05E87 /* ShoppingCartListRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingCartListRouter.swift; sourceTree = "<group>"; };
 		C5CE5A9F2BD52F0A00C05E87 /* ButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
 		C5CE5AA12BD540F400C05E87 /* Basket Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Basket Manager.swift"; sourceTree = "<group>"; };
+		C5CE5AA42BD86A3100C05E87 /* ProductModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProductModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				C5CE5A792BD51A1100C05E87 /* ViewSections.swift */,
 				C5CE5A4D2BD519F100C05E87 /* Assets.xcassets */,
 				C5CE5A522BD519F100C05E87 /* Info.plist */,
+				C5CE5AA32BD86A3100C05E87 /* ProductModel.xcdatamodeld */,
 			);
 			path = GetirFinalApp;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5CE5A802BD51A1100C05E87 /* ProductListPresenter.swift in Sources */,
+				C5CE5AA52BD86A3100C05E87 /* ProductModel.xcdatamodeld in Sources */,
 				C5CE5A752BD519FD00C05E87 /* GetirService.swift in Sources */,
 				C5CE5A902BD51B6700C05E87 /* ProductDetailPresenter.swift in Sources */,
 				C5CE5A972BD51B7900C05E87 /* ShoppingCartListViewController.swift in Sources */,
@@ -698,6 +702,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C5CE5AA32BD86A3100C05E87 /* ProductModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C5CE5AA42BD86A3100C05E87 /* ProductModel.xcdatamodel */,
+			);
+			currentVersion = C5CE5AA42BD86A3100C05E87 /* ProductModel.xcdatamodel */;
+			path = ProductModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C5CE5A392BD519EF00C05E87 /* Project object */;
 }

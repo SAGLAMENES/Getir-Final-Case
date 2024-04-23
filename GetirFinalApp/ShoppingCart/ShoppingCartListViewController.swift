@@ -14,7 +14,7 @@ protocol ShoppingCartListViewControllerProtocol: AnyObject {
 final class ShoppingCartListViewController: UIViewController{
     
     var presenter: ShoppingCartListPresenterProtocol!
-    let collecctionView = UICollectionView()
+    //let collectionView = UICollectionView()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red

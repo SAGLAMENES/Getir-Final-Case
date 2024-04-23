@@ -37,9 +37,9 @@ extension ProductListRouter: ProductListRouterProtocol {
         viewController?.navigationController?.pushViewController(productDetailVC, animated: true)
     }
     
-    func navigateToShoppingCart() {/*
-                                    
-                                    let shoppingCartVC = ShoppingCartListViewController()
-                                    viewController?.navigationController?.pushViewController(shoppingCartVC, animated: true)
-                                    */}
+    func navigateToShoppingCart() {
+        
+        let shoppingCartVC = ShoppingCartListRouter.buildShoppingCartVC()
+        viewController?.navigationController?.pushViewController(shoppingCartVC, animated: true)
+    }
 }

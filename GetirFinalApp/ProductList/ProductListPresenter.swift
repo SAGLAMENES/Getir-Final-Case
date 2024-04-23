@@ -16,7 +16,9 @@ protocol ProductListPresenterProtocol: AnyObject {
     func suggestedProduct(_ index: Int) -> Product?
     func didSelectProduct(at index: Int, at section: String)
     func tappedShoppingCart()
-   
+    func increaseProductCount(product: Product)
+    func decreaseProductCount(product: Product)
+    func setCartCount() -> String
 }
 
 
@@ -40,6 +42,18 @@ final class ProductListPresenter {
 }
 
 extension ProductListPresenter: ProductListPresenterProtocol{
+    func setCartCount() -> String {
+        return "hello"
+    }
+    
+    func increaseProductCount(product: Product) {
+        interactor.saveProduct(product: product)
+    }
+    
+    func decreaseProductCount(product: Product) {
+        print(product.name)
+    }
+    
     func setTitle() -> String {
         "Ürünler"
     }

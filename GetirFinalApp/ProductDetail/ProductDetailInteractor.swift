@@ -20,10 +20,11 @@ final class ProductDetailInteractor: ProductDetailInteractorProtocol{
     }
     
     func addProductToBasket(product: Product) {
-        basketManager.addProduct(product: product)
+      //  basketManager.addProduct(product: product)
     }
     
     func deleteProductFromBasket(product: Product) {
         basketManager.removeProduct(product: product)
     }
+     
 }

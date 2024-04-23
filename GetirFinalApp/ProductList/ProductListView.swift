@@ -21,6 +21,7 @@ final class ProductListView: UIViewController {
     
     var presenter: ProductListPresenterProtocol!
     var sections : [String] = ["horizontal", "vertical"]
+    
     private var collectionView : UICollectionView!
     
     
@@ -67,7 +68,6 @@ final class ProductListView: UIViewController {
 }
 
 extension ProductListView: ProductListViewProtocol {
-    
     func reloadData() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -104,9 +104,8 @@ extension ProductListView: ProductListViewProtocol {
         customView.addSubview(imageView)
         
         let label = UILabel(frame: CGRect(x: 35, y: 8, width: 45, height: 20))
-        label.text = "₺0,00"
         label.lineBreakMode = .byWordWrapping
-
+        label.text = presenter.setCartCount()
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textAlignment = .center
         label.textColor = UIColor.getirColor
@@ -114,12 +113,18 @@ extension ProductListView: ProductListViewProtocol {
         customView.addSubview(label)
         
         customView.layer.borderWidth = 1
-        customView.layer.borderColor = CGColor(red: 0.3668828309, green: 0.2458522022, blue: 0.7363297939, alpha: 1)
+        customView.layer.borderColor = UIColor.getirColor.cgColor
         customView.backgroundColor = #colorLiteral(red: 0.9595986009, green: 0.9542704225, blue: 0.9845344424, alpha: 1)
         customView.layer.cornerRadius = 8
-        let customBarButtonItem = UIBarButtonItem(customView: customView)
-        navigationItem.rightBarButtonItem = customBarButtonItem
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tappedShoppingCart))
+        
+        customView.addGestureRecognizer(tap)
+        
+        let customBarButtonItem = UIBarButtonItem(customView: customView)
+        
+        navigationItem.rightBarButtonItem = customBarButtonItem
+        navigationItem.rightBarButtonItem?.target = self
     }
     
     func showLoadingView() {
@@ -131,28 +136,29 @@ extension ProductListView: ProductListViewProtocol {
     }
     
     @objc func tappedShoppingCart() {
-        presenter!.tappedShoppingCart()
+        presenter.tappedShoppingCart()
     }
 }
 
 
-extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource, ProductsCellDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch sections[indexPath.section]{
         case "vertical":
+            
             presenter.didSelectProduct(at: indexPath.row, at: "vertical")
         case "horizontal":
             presenter.didSelectProduct(at: indexPath.row, at: "horizontal")
         default:
             presenter.didSelectProduct(at: indexPath.row, at: "vertical")
-
+            
         }
     }
-   
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         sections.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch sections[section] {
         case "vertical":
@@ -173,11 +179,13 @@ extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource 
         switch sections[indexPath.section] {
         case "horizontal":
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as? ProductsCell else {
-                fatalError("faillll")
+                fatalError("fail")
             }
+            
             let products = presenter?.suggestedProduct(indexPath.row)
             cell.configure(with: products?.name ?? "000", price: products?.priceText ?? "000", attribute: products?.attribute ?? "", image: "sepet")
             cell.backgroundColor = .gray
+            cell.delegate = self
             return cell
             
         case "vertical":
@@ -187,14 +195,36 @@ extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource 
             let product = presenter?.product(indexPath.row)
             cell.configure(with: product?.name ?? "000", price: product?.priceText ?? "000", attribute: product?.attribute ?? "", image: "sepet")
             cell.backgroundColor = .white
-            
+            cell.delegate = self
             
             return cell
         default:
             return UICollectionViewCell()
         }
     }
+    
+    func didTapIncreaseButton(cell: ProductsCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        guard let data = presenter.product(indexPath.row) else {
+            return
+        }
+        presenter.increaseProductCount(product: data)
+    }
+    func didTapDecreaseButton(cell: ProductsCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        guard let data = presenter.product(indexPath.row) else {
+            return
+        }
+        presenter.decreaseProductCount(product: data)
+    }
+
 }
+
+
 
 extension ProductListView: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -10,11 +10,13 @@ import Foundation
 protocol ProductListInteractorProtocol: AnyObject {
     func fetchProducts()
     func fetchSuggestedProducts()
+    func saveProduct(product: Product)
 }
 
 protocol ProductListInteractorOutputProtocol: AnyObject {
     func fetchProductsOutput(products: [Product])
     func fetchSuggestedProductsOutput(suggestedProducts: [Product])
+    func fetchProductImageOutput(imageData: Data)
 
 }
 
@@ -24,6 +26,11 @@ final class ProductListInteractor{
 }
 
 extension ProductListInteractor: ProductListInteractorProtocol{
+    func saveProduct(product: Product) {
+        
+    }
+    
+   
     func fetchProducts() {
         let service = GetirService()
         service.getProducts {[weak self] result in

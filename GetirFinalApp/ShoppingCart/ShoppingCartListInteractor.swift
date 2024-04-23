@@ -26,7 +26,7 @@ extension ShoppingCartListInteractor: ShoppingCartListInteractorProtocol {
     }
     
     func didProductUpdate(product: Product) {
-        BasketManager.shared.addProduct(product: product)
+       // BasketManager.shared.addProduct(product: product)
     }
     
 }
