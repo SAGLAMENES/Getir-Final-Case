@@ -6,13 +6,13 @@
 //
 
 import Foundation
-
 import UIKit
 
 protocol ProductListViewProtocol: AnyObject {
     func reloadData()
     func setUpCollectionView()
     func setUpNavigationBar()
+    func reloadNavigationBar()
     func showLoadingView()
     func hideLoadingView()
 }
@@ -24,12 +24,10 @@ final class ProductListView: UIViewController {
     
     private var collectionView : UICollectionView!
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
         presenter.viewDidLoad()
-        
     }
+    
     private func createLay() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex, layoutEnvironment) -> NSCollectionLayoutSection? in
             
@@ -68,6 +66,10 @@ final class ProductListView: UIViewController {
 }
 
 extension ProductListView: ProductListViewProtocol {
+    func reloadNavigationBar() {
+        navigationController?.navigationBar.setNeedsLayout()
+    }
+    
     func reloadData() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -82,6 +84,7 @@ extension ProductListView: ProductListViewProtocol {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(ProductsCell.self, forCellWithReuseIdentifier: ProductsCell.identifier)
+        collectionView.register(ProductsCellHorizontal.self, forCellWithReuseIdentifier: ProductsCellHorizontal.identifier)
         collectionView.backgroundColor = .white
         view.addSubview(collectionView)
         
@@ -103,9 +106,9 @@ extension ProductListView: ProductListViewProtocol {
         imageView.frame = CGRect(x: 0, y: 0, width: 34, height: 34)
         customView.addSubview(imageView)
         
-        let label = UILabel(frame: CGRect(x: 35, y: 8, width: 45, height: 20))
+        let label = UILabel(frame: CGRect(x: 35, y: 8, width: 50, height: 20))
         label.lineBreakMode = .byWordWrapping
-        label.text = presenter.setCartCount()
+        label.text = "\(presenter.setCartCount())₺"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.textAlignment = .center
         label.textColor = UIColor.getirColor
@@ -141,18 +144,20 @@ extension ProductListView: ProductListViewProtocol {
 }
 
 
-extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource, ProductsCellDelegate {
+extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource, ProductsCellDelegate, ProductsCellHorizontalDelegate {
+  
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch sections[indexPath.section]{
         case "vertical":
             
             presenter.didSelectProduct(at: indexPath.row, at: "vertical")
+            
         case "horizontal":
             presenter.didSelectProduct(at: indexPath.row, at: "horizontal")
+            
         default:
             presenter.didSelectProduct(at: indexPath.row, at: "vertical")
-            
         }
     }
     
@@ -178,22 +183,28 @@ extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch sections[indexPath.section] {
         case "horizontal":
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as? ProductsCell else {
-                fatalError("fail")
-            }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductsCellHorizontal.identifier, for: indexPath) as? ProductsCellHorizontal else {
+                        fatalError("Expected ⁠ ProductsCellHorizontal ⁠ type for reuseIdentifier \(ProductsCellHorizontal.identifier).")
+                    }
+
             
             let products = presenter?.suggestedProduct(indexPath.row)
-            cell.configure(with: products?.name ?? "000", price: products?.priceText ?? "000", attribute: products?.attribute ?? "", image: "sepet")
+            guard let image = products?.imageURL else {
+                return UICollectionViewCell()
+            }
+            cell.configure(with: products?.name ?? "000", price: products?.priceText ?? "000", attribute: products?.attribute ?? "", image: products?.imageURL ?? image )
             cell.backgroundColor = .gray
             cell.delegate = self
             return cell
             
         case "vertical":
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductsCell.identifier, for: indexPath) as? ProductsCell else {
-                fatalError("faillll")
-            }
+                        fatalError("Expected ⁠ ProductsCell ⁠ type for reuseIdentifier \(ProductsCell.identifier).")
+                    }
+
             let product = presenter?.product(indexPath.row)
-            cell.configure(with: product?.name ?? "000", price: product?.priceText ?? "000", attribute: product?.attribute ?? "", image: "sepet")
+            
+            cell.configure(with: product?.name ?? "000", price: product?.priceText ?? "000", attribute: product?.attribute ?? "", image: (product?.imageURL)!, number: presenter.getCartItemNumber(index: indexPath.row))
             cell.backgroundColor = .white
             cell.delegate = self
             
@@ -212,16 +223,38 @@ extension ProductListView: UICollectionViewDelegate, UICollectionViewDataSource,
         }
         presenter.increaseProductCount(product: data)
     }
+    
     func didTapDecreaseButton(cell: ProductsCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        
+        guard let data = presenter.product(indexPath.row) else {
+            return
+        }
+        presenter.decreaseProductCount(product: data)
+    }
+    func didTapIncreaseButton(cell: ProductsCellHorizontal) {
         guard let indexPath = collectionView.indexPath(for: cell) else {
             return
         }
         guard let data = presenter.product(indexPath.row) else {
             return
         }
+        presenter.increaseProductCount(product: data)
+    }
+    
+    func didTapDecreaseButton(cell: ProductsCellHorizontal) {
+        guard let indexPath = collectionView.indexPath(for: cell) else {
+            return
+        }
+        
+        guard let data = presenter.product(indexPath.row) else {
+            return
+        }
         presenter.decreaseProductCount(product: data)
     }
-
+    
 }
 
 
@@ -240,5 +273,3 @@ extension ProductListView: UICollectionViewDelegateFlowLayout{
         return 12
     }
 }
-
-

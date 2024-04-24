@@ -11,9 +11,9 @@ import UIKit
 
 protocol ProductDetailPresenterProtocol: AnyObject{
     func viewDidLoad()
-    func addProductToCart()
-    func increaseProductAmount()
-    func decreaseProductAmount()
+    func increaseProductCount(product: Product)
+    func decreaseProductCount(product: Product)
+    func getCartItemNumber(product: Product) -> Int
     func setTitle() -> String
     func tappedShoppingCart()
 }
@@ -36,6 +36,19 @@ final class ProductDetailPresenter{
 }
 
 extension ProductDetailPresenter: ProductDetailPresenterProtocol{
+ 
+    func getCartItemNumber(product: Product) -> Int {
+        interactor.getProductNumber(id: product.id)
+    }
+    
+    func increaseProductCount(product: Product) {
+        interactor.saveProduct(product: product)
+    }
+    
+    func decreaseProductCount(product: Product) {
+        interactor.deleteProduct(product: product)
+    }
+    
     func setTitle() -> String {
         "Ürün Detayı"
     }
@@ -45,18 +58,6 @@ extension ProductDetailPresenter: ProductDetailPresenterProtocol{
         view.setUpView()
         view.showProductDetail(product: product)
         
-    }
-    
-    func addProductToCart() {
-        //interactor.addProductToCart(product: product)
-    }
-    
-    func increaseProductAmount() {
-       // interactor.increaseProductAmount(product: product)
-    }
-    
-    func decreaseProductAmount() {
-        //interactor.decreaseProductAmount(product: product)
     }
     
     func tappedShoppingCart() {

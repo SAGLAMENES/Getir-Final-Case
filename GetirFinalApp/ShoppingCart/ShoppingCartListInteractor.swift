@@ -7,9 +7,9 @@
 
 import Foundation
 protocol ShoppingCartListInteractorProtocol: AnyObject {
-    func fetchShoppingCartList()
-    func didProductDelete(product: Product)
-    func didProductUpdate(product: Product)
+    func fetchShoppingCartList() -> [Product]
+    func deleteProduct(product: Product)
+    func saveProduct(product: Product)
 }
 
 final class ShoppingCartListInteractor {
@@ -17,16 +17,18 @@ final class ShoppingCartListInteractor {
 }
 
 extension ShoppingCartListInteractor: ShoppingCartListInteractorProtocol {
-    func fetchShoppingCartList() {
-        BasketManager.shared.getBasket()
-    }
-    
-    func didProductDelete(product: Product) {
+    func deleteProduct(product: Product) {
         BasketManager.shared.removeProduct(product: product)
     }
-    
-    func didProductUpdate(product: Product) {
-       // BasketManager.shared.addProduct(product: product)
+    func getProductNumber(id: String) -> Int {
+        return BasketManager.shared.fetchProductNumber(forProductId: id) ?? 1
     }
     
+    func saveProduct(product: Product) {
+        BasketManager.shared.updateProduct(product: product)
+    }
+    func fetchShoppingCartList() -> [Product] {
+         return BasketManager.shared.getBasket()
+    }
+        
 }

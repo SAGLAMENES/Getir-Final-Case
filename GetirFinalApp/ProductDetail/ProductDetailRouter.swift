@@ -23,7 +23,7 @@ final class ProductDetailRouter: ProductDetailRouterProtocol{
         let interactor = ProductDetailInteractor(basketManager: BasketManager.shared)
         let router = ProductDetailRouter(viewController: ProductDetailViewController())
         
-        let presenter = ProductDetailPresenter(view: view as! ProductDetailViewProtocol, interactor: interactor, router: router, product: product)
+        let presenter = ProductDetailPresenter(view: view as ProductDetailViewProtocol, interactor: interactor, router: router, product: product)
         
         view.presenter = presenter 
         router.viewController = view

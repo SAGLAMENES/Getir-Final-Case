@@ -29,13 +29,17 @@ final class ShoppingCartListRouter: ShoppingCartListRouterProtocol{
         let interactor = ShoppingCartListInteractor()
         let router = ShoppingCartListRouter(viewController: view)
         
-        let presenter = ShoppingCartListPresenter(viewController: view, router: router, interactor: interactor)
+        let presenter = ShoppingCartListPresenter(view: view, router: router, interactor: interactor)
         
         view.presenter = presenter
         router.viewController = view
         
         return view
         
+    }
+    func navigateToProductDetail(product: Product) {
+        let detailVC = ProductDetailRouter.buildDetailVC(with: product)
+        viewController?.navigationController?.pushViewController(detailVC, animated: true)
     }
    
 }

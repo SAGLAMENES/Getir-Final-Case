@@ -6,11 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ProductListPresenterProtocol: AnyObject {
     func viewDidLoad()
     func numberOfItems(section: Int) -> Int?
-    func didAddProduct(at index: Int) -> Product
     func product(_ index: Int) -> Product?
     func setTitle() -> String
     func suggestedProduct(_ index: Int) -> Product?
@@ -19,14 +19,14 @@ protocol ProductListPresenterProtocol: AnyObject {
     func increaseProductCount(product: Product)
     func decreaseProductCount(product: Product)
     func setCartCount() -> String
+    func getCartItemNumber(index: Int) -> Int 
 }
 
 
 final class ProductListPresenter {
-    
-     unowned var view: ProductListViewProtocol!
-     let interactor: ProductListInteractorProtocol!
-     let router: ProductListRouterProtocol!
+    unowned var view: ProductListViewProtocol!
+    let interactor: ProductListInteractorProtocol!
+    let router: ProductListRouterProtocol!
     
     private var products: [Product] = []
     private var suggestedProducts: [Product] = []
@@ -42,23 +42,41 @@ final class ProductListPresenter {
 }
 
 extension ProductListPresenter: ProductListPresenterProtocol{
+  
     func setCartCount() -> String {
-        return "hello"
+        let total = calculateTotalPrice()
+        view.reloadNavigationBar()
+        view.reloadData()
+        return "\(total)"
     }
+
+    func calculateTotalPrice() -> Double {
+        var total: Double = 0
+        for product in products {
+            let count = interactor.getProductNumber(id: product.id)
+            total += Double(count) * (product.price ?? 7)
+        }
+        view.reloadNavigationBar() // Move the view update before returning the total
+        return total
+    }
+
     
     func increaseProductCount(product: Product) {
         interactor.saveProduct(product: product)
+        view.reloadNavigationBar()
     }
-    
+    func getCartItemNumber(index: Int) -> Int {
+        interactor.getProductNumber(id: products[index].id)
+    }
     func decreaseProductCount(product: Product) {
-        print(product.name)
+        interactor.deleteProduct(product: product)
     }
     
     func setTitle() -> String {
         "Ürünler"
     }
     
-   
+    
     enum Section: Int {
         case vertical
         case horizontal
@@ -68,7 +86,6 @@ extension ProductListPresenter: ProductListPresenterProtocol{
         view.setUpNavigationBar()
         fetchProducts()
         view.setUpCollectionView()
-        
     }
     
     func numberOfItems(section: Int) -> Int? {
@@ -80,12 +97,6 @@ extension ProductListPresenter: ProductListPresenterProtocol{
         default:
             return 1
         }
-        
-    }
-    
-    
-    func didAddProduct(at index: Int) -> Product {
-        return products[index]
     }
     
     func didSelectProduct(at index: Int, at section: String) {
@@ -110,6 +121,7 @@ extension ProductListPresenter: ProductListPresenterProtocol{
         interactor.fetchProducts()
         interactor.fetchSuggestedProducts()
     }
+    
 }
 
 extension ProductListPresenter: ProductListInteractorOutputProtocol{

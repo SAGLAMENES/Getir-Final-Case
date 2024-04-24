@@ -87,6 +87,7 @@ struct Category: Codable {
 // MARK: - Product
 struct Product: Codable {
     let id, name: String
+    let number : Int?
     let attribute: String?
     let  imageURL: String?
     let price: Double?

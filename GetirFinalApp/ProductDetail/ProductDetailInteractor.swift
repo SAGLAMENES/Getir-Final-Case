@@ -7,11 +7,24 @@
 
 import Foundation
 protocol ProductDetailInteractorProtocol{
-    func addProductToBasket(product: Product)
-    func deleteProductFromBasket(product: Product)
+    func deleteProduct(product: Product)
+    func saveProduct(product: Product)
+    func getProductNumber(id: String) -> Int
+    
 }
 
 final class ProductDetailInteractor: ProductDetailInteractorProtocol{
+    func getProductNumber(id: String) -> Int {
+        return BasketManager.shared.fetchProductNumber(forProductId: id) ?? 0
+    }
+    func deleteProduct(product: Product) {
+        BasketManager.shared.removeProduct(product: product)
+    }
+    
+    func saveProduct(product: Product) {
+        BasketManager.shared.updateProduct(product: product)
+    }
+    
     var presenter: ProductDetailPresenterProtocol!
     var basketManager: BasketManagerProtocol!
     
@@ -19,12 +32,6 @@ final class ProductDetailInteractor: ProductDetailInteractorProtocol{
         self.basketManager = basketManager
     }
     
-    func addProductToBasket(product: Product) {
-      //  basketManager.addProduct(product: product)
-    }
-    
-    func deleteProductFromBasket(product: Product) {
-        basketManager.removeProduct(product: product)
-    }
+   
      
 }

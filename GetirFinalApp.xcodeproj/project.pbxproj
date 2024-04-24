@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C58DFE402BD9720C002F134D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C58DFE3F2BD9720C002F134D /* Kingfisher */; };
 		C5CE5A452BD519EF00C05E87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5A442BD519EF00C05E87 /* AppDelegate.swift */; };
 		C5CE5A472BD519EF00C05E87 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5A462BD519EF00C05E87 /* SceneDelegate.swift */; };
 		C5CE5A4E2BD519F100C05E87 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5CE5A4D2BD519F100C05E87 /* Assets.xcassets */; };
@@ -33,6 +34,8 @@
 		C5CE5AA02BD52F0B00C05E87 /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5A9F2BD52F0A00C05E87 /* ButtonExtension.swift */; };
 		C5CE5AA22BD540F400C05E87 /* Basket Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5AA12BD540F400C05E87 /* Basket Manager.swift */; };
 		C5CE5AA52BD86A3100C05E87 /* ProductModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5AA32BD86A3100C05E87 /* ProductModel.xcdatamodeld */; };
+		C5CE5AA82BD8722D00C05E87 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = C5CE5AA72BD8722D00C05E87 /* SDWebImage */; };
+		C5CE5AAA2BD880AE00C05E87 /* ShoppingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CE5AA92BD880AE00C05E87 /* ShoppingCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +86,7 @@
 		C5CE5A9F2BD52F0A00C05E87 /* ButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
 		C5CE5AA12BD540F400C05E87 /* Basket Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Basket Manager.swift"; sourceTree = "<group>"; };
 		C5CE5AA42BD86A3100C05E87 /* ProductModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProductModel.xcdatamodel; sourceTree = "<group>"; };
+		C5CE5AA92BD880AE00C05E87 /* ShoppingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C58DFE402BD9720C002F134D /* Kingfisher in Frameworks */,
+				C5CE5AA82BD8722D00C05E87 /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +210,7 @@
 				C5CE5A922BD51B7900C05E87 /* ShoppingCartListPresenter.swift */,
 				C5CE5A952BD51B7900C05E87 /* ShoppingCartListRouter.swift */,
 				C5CE5A932BD51B7900C05E87 /* ShoppingCartListViewController.swift */,
+				C5CE5AA92BD880AE00C05E87 /* ShoppingCell.swift */,
 			);
 			path = ShoppingCart;
 			sourceTree = "<group>";
@@ -242,6 +249,10 @@
 			dependencies = (
 			);
 			name = GetirFinalApp;
+			packageProductDependencies = (
+				C5CE5AA72BD8722D00C05E87 /* SDWebImage */,
+				C58DFE3F2BD9720C002F134D /* Kingfisher */,
+			);
 			productName = GetirFinalApp;
 			productReference = C5CE5A412BD519EF00C05E87 /* GetirFinalApp.app */;
 			productType = "com.apple.product-type.application";
@@ -314,6 +325,10 @@
 				Base,
 			);
 			mainGroup = C5CE5A382BD519EF00C05E87;
+			packageReferences = (
+				C5CE5AA62BD8722D00C05E87 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				C58DFE3E2BD9720C002F134D /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = C5CE5A422BD519EF00C05E87 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -356,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5CE5A802BD51A1100C05E87 /* ProductListPresenter.swift in Sources */,
+				C5CE5AAA2BD880AE00C05E87 /* ShoppingCell.swift in Sources */,
 				C5CE5AA52BD86A3100C05E87 /* ProductModel.xcdatamodeld in Sources */,
 				C5CE5A752BD519FD00C05E87 /* GetirService.swift in Sources */,
 				C5CE5A902BD51B6700C05E87 /* ProductDetailPresenter.swift in Sources */,
@@ -702,6 +718,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C58DFE3E2BD9720C002F134D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
+		C5CE5AA62BD8722D00C05E87 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.19.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C58DFE3F2BD9720C002F134D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C58DFE3E2BD9720C002F134D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		C5CE5AA72BD8722D00C05E87 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C5CE5AA62BD8722D00C05E87 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		C5CE5AA32BD86A3100C05E87 /* ProductModel.xcdatamodeld */ = {
